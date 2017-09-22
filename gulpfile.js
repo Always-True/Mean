@@ -1,10 +1,21 @@
+
+
+
+
+
+
+
+
+
+
 'use strict';
 
 /**
  * Module dependencies.
  */
 var _ = require('lodash'),
-  defaultAssets = require('./config/assets/default'),
+
+    defaultAssets = require('./config/assets/default'),
   testAssets = require('./config/assets/test'),
   gulp = require('gulp'),
   gulpLoadPlugins = require('gulp-load-plugins'),
@@ -13,6 +24,7 @@ var _ = require('lodash'),
     rename: {
       'gulp-angular-templatecache': 'templateCache'
     }
+
   }),
   path = require('path'),
   endOfLine = require('os').EOL,
@@ -22,6 +34,7 @@ var _ = require('lodash'),
 
 // Set NODE_ENV to 'test'
 gulp.task('env:test', function () {
+
   process.env.NODE_ENV = 'test';
 });
 
@@ -29,6 +42,8 @@ gulp.task('env:test', function () {
 gulp.task('env:dev', function () {
   process.env.NODE_ENV = 'development';
 });
+
+
 
 // Set NODE_ENV to 'production'
 gulp.task('env:prod', function () {
