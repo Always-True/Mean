@@ -173,9 +173,10 @@ function merge(left, right){
     return result;
 };
 
-/*return value in mm*/
+/*return value in mm/min*/
 function avgIrrigation(req){
   var canArray = req.body.can_depths;
+  var time = req.body.time;
   var length = canArray.length;
   var sum = 0;
   var i = 0;
@@ -183,6 +184,7 @@ function avgIrrigation(req){
   	sum += canArray[i];
   }
 
-  return (sum/length).toFixed(2);
+  var avgDepth = sum/length;
+  return (avgDepth/time).toFixed(2);
 }
 /********************************* my code is here *****************************************************/
