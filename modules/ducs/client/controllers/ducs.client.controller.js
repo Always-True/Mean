@@ -49,5 +49,11 @@
         vm.error = res.data.message;
       }
     }
+
+      function inchTomm(value){
+        var result;
+        result = value * 25.4;
+        return result;
+     }
   }
 }());
