@@ -4,7 +4,7 @@
   // Ducs controller
   angular
     .module('ducs')
-    .controller('DucsController', DucsController);
+    .controller('Duc', DucsController);
 
   DucsController.$inject = ['$scope', '$state', '$window', 'Authentication', 'ducResolve'];
 
