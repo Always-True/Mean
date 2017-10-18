@@ -4,17 +4,33 @@
 
   angular
     .module('ducs')
-    .factory('DucsService', DucsService);
+    .factory('DucsService', ['$http', function($http){
+    var methods = {
 
-  DucsService.$inject = ['$resource'];
+      create: function(listing) {
+        return $http.post('/api/measurements', listing);
+      },
 
-  function DucsService($resource) {
-    return $resource('api/ducs/:ducId', {
-      ducId: '@_id'
-    }, {
-      update: {
-        method: 'PUT'
+      list: function() {
+        return $http.get('/api/measurements');
+      },
+      
+      read: function(id) {
+        return $http.get('/api/measurements/' + id);
+      },
+
+      deleteMeasurement: function(measurement) {
+        return $http.delete('/api/measurements/' + measurement);
+      },
+
+      email: function(id, data){
+        return $http.post('/api/email-result/' + id, data);
+
       }
-    });
-  }
-}());
+    };
+
+    return methods; 
+  }]);
+}()
+
+);

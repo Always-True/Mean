@@ -23,10 +23,13 @@
       state: 'ducs.admin-list',
       roles: ['user', 'admin']
     });
+<<<<<<< HEAD
     menuService.addSubMenuItem('topbar', 'admin', {
       title: 'County Map',
       state: 'ducs.admin-map',
       roles: ['user', 'admin']
     });
+=======
+>>>>>>> controller
   }
 }());
