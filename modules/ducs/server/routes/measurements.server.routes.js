@@ -13,9 +13,10 @@ module.exports = function(app) {
     // Ducs Routes
     app.route('/api/measurements')
       .get(measurements.list)
-      .post(measurements.county,measurements.create);
-    
-      
+      .post(measurements.county, measurements.city, measurements.create);
+
+    app.route('/api/measurements/count')
+      .get(measurements.getCountyCounts);
 
     app.route('/api/measurements/:measureId')
       .get(measurements.read)

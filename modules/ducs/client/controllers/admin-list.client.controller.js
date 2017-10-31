@@ -28,6 +28,45 @@
                     //otherwise display the error
                     $scope.error = 'Unable to delete measurement!\n' + error;
                 });
+                
     };
+
+    $scope.formatDate = function(date) {
+      var dbDate = new Date(date);
+      return dbDate.toLocaleDateString();
+    };
+
+    $scope.getResult = function(distribution) {
+      if(distribution > 0.84)
+        return "Exceptional";
+      else if(distribution >= 0.75 && distribution <= 0.84)
+        return "Excellent";
+      else if(distribution >= 0.70 && distribution <= 0.74)
+        return "Very Good";
+      else if(distribution >= 0.60 && distribution <= 0.69)
+        return "Good";
+      else if(distribution >= 0.5 &&  distribution <= 0.59)
+        return "Fair";
+      else if(distribution >= 0.4 &&  distribution <= 0.49)
+        return "Poor";
+      else
+        return "Fail";
+    };
+
+    $scope.showDepths = function(depths) {
+      //console.log("show depths");
+      var modal = document.getElementById("depthsModal");
+      var modalBody = document.getElementById("modalBody");
+      modalBody.innerHTML = "<p>" + depths + "</p>";
+      modal.style.display = "block"; //make modal visible
+      //$("depthsModal").modal('show');
+    }
+
+    $scope.closeModal = function() {
+      //console.log("close modal");
+      var modal = document.getElementById("depthsModal");
+      modal.style.display = "none";
+      //$("depthsModal").modal('hide');
+    }
   }
 }());
