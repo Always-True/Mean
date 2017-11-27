@@ -60,7 +60,7 @@
               console.log("Deleted all measurements");
           }, function(error) {
               //otherwise display the error
-              $scope.error = 'Unable to delete measurement!';
+              $scope.error = 'Unable to delete measurements!';
           });
         }
       }
