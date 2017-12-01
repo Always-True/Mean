@@ -28,7 +28,7 @@
     
     $scope.validateField = function(first_form){
       
-          if($scope.counties.includes($scope.selected_county) || $scope.zipcode != undefined){
+          if($scope.counties.includes($scope.selected_county) || $scope.zipcode != undefined || $scope.selected_county == undefined){
             first_form.County.$setValidity('InvalidCounty', true); 
           } 
           else {
