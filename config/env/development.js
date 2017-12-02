@@ -73,7 +73,7 @@ module.exports = {
     options: {
       service: 'Gmail',
       secure: false,
-      port:25,
+      port:465,
       auth: {
         user: 'ducalwaystrue@gmail.com',
         pass: '#Cen3031'
