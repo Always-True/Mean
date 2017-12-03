@@ -3,6 +3,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.3/ng-csv.min.js"></script>
 
+    <style>
+    .sortOrder:after {
+  content: '\25b2';
+}
+.sortOrder.reverse:after {
+  content: '\25bc';
+}</style>
+
     <div class="page-header" ng-init="list()">
       <h1>View DUCs</h1>
     </div>
@@ -18,14 +26,29 @@
     <div class="col-lg-12 list-group">
       <table class="table table-striped">
         <thead>
-          <td ng-click="sortBy('zipcode')">Zip</td>
-          <td ng-click="sortBy('county')">County</td>
-          <td ng-click="sortBy('results.uniformity_distribution')">Result</td>
-          <td ng-click="sortBy('results.uniformity_distribution')">Uniformity Distribution</td>
-          <td ng-click="sortBy('results.irrigation_rate')">Irrigation Rate</td>
-          <td ng-click="sortBy('can_depths.length')">Can Depths</td>
-          <td ng-click="sortBy('user.email')">Email</td>
-          <td ng-click="sortBy('created_at')">Date</td>
+          <td ng-click="sortBy('zipcode')">Zip
+            <span class="sortOrder" ng-show="sortColumn === 'zipcode'" ng-class="{reverse: reverseSort}"></span>
+          </td>
+          <td ng-click="sortBy('county')">County
+            <span class="sortOrder" ng-show="sortColumn === 'county'" ng-class="{reverse: reverseSort}"></span>
+          </td>
+          <td ng-click="sortBy('results.uniformity_distribution')">Result
+            <span class="sortOrder" ng-show="sortColumn === 'results.uniformity_distribution'" ng-class="{reverse: reverseSort}"></span>
+          </td>
+          <td ng-click="sortBy('results.uniformity_distribution')">Uniformity Distribution
+          </td>
+          <td ng-click="sortBy('results.irrigation_rate')">Irrigation Rate
+            <span class="sortOrder" ng-show="sortColumn === 'results.irrigation_rate'" ng-class="{reverse: reverseSort}"></span>
+          </td>
+          <td ng-click="sortBy('can_depths.length')">Can Depths
+            <span class="sortOrder" ng-show="sortColumn === 'can_depths.length'" ng-class="{reverse: reverseSort}"></span>
+          </td>
+          <td ng-click="sortBy('user.email')">Email
+            <span class="sortOrder" ng-show="sortColumn === 'user.email'" ng-class="{reverse: reverseSort}"></span>
+          </td>
+          <td ng-click="sortBy('created_at')">Date
+            <span class="sortOrder" ng-show="sortColumn === 'created_at'" ng-class="{reverse: reverseSort}"></span>
+          </td>
           <td>Delete</td>
         </thead>
         <tbody id="measurements">
