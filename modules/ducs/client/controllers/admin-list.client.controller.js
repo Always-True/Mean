@@ -148,5 +148,12 @@
       modal.style.display = "none";
       //$("depthsModal").modal('hide');
     }
+
+    window.onclick = function(event) {
+      var modal = document.getElementById("depthsModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
   }
 }());
