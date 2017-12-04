@@ -1,4 +1,4 @@
-<section>
+<section class="container">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-sanitize.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-csv/0.3.3/ng-csv.min.js"></script>
@@ -50,11 +50,11 @@
       <button class="btn btn-danger" ng-click="deleteAll()">Delete All Measurements</button>
     </div>
 
-    <div id="depthsModal" class="modal fade in" style="display: none; float: left; top: 50%;">
+    <div id="depthsModal" class="modal fade in" style="z-index:3;display:none;padding-top:300px;position:fixed;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgb(0,0,0);background-color:rgba(0,0,0,0.4)">
         <div class="modal-dialogue">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" ng-click="closeModal()">Close</button>
+              <button type="button" class="close" ng-click="closeModal()">X</button>
               <h4 class="modal-title" id="modalTitle">Can Depths</h4>
             </div>
             <div class="modal-body" id="modalBody">
