@@ -1,4 +1,4 @@
-<section>
+<section class="container">
     <div class="page-header">
       <form name = "InputData" ng-show="hide">
 
@@ -135,7 +135,7 @@
         <!-- display dynamic input -->
         <div ng-repeat="value in idArrayForDepth">
           <div class="form-group">
-              <label class='control-label'>Amount of Water</label><br>
+              <label class='control-label'>Can {{value.id + 1}}: Amount of Water</label><br>
                 <div class = "input-group">
                    <input name = 'depth' id ={{value.id}} type='number' step='any' class='form-control' min='0.000001' required/><br>
                    <span class="input-group-addon">{{unit? 'cm': 'inch'}}</span>
@@ -165,7 +165,7 @@
         <!-- display dynamic input -->
         <div ng-repeat="value in idArrayForVolume">
           <div class="form-group">
-              <label class='control-label'>Volume of water</label><br>
+              <label class='control-label'>Can {{(value.id - idArrayForDepth.length )+ 1}}: Volume of water</label><br>
                 <div class = "input-group">
                    <input name = 'volume' id ={{value.id}} type='number' step='any' class='form-control' placeholder='Volume in ml' min='0' required/><br>
                    <span class="input-group-addon">ml</span>
