@@ -12,7 +12,7 @@
     $scope.authentication = Authentication;
 
     //login as guest, go to home page
-    if($scope.authentication.user == null){
+    /*if($scope.authentication.user == null){
 
     }
     else{
@@ -32,6 +32,6 @@
         $state.go('ducs.create', $state.previous.params);
       } 
 
-    }
+    }*/
 }
 }());
