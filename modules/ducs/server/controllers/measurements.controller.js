@@ -212,13 +212,25 @@ exports.export = function(req, res) {
     } else {
       var measurementString = "Date,County,Email,Zipcode,Time,Irrigation Rate,Uniformity Distribution \n";
       measurements.forEach(function(measurement) {
-        measurementString += formatDate(measurement.created_at) +
-        "," + measurement.county +
-        "," + measurement.user.email +
-        "," + measurement.zipcode +
-        "," + measurement.time +
-        "," + measurement.results.irrigation_rate +
-        "," + measurement.results.uniformity_distribution + '\n';
+
+      	if(measurement.user == null){
+            measurementString += formatDate(measurement.created_at) +
+            "," + measurement.county +
+            "," + "undefine" +
+            "," + measurement.zipcode +
+            "," + measurement.time +
+            "," + measurement.results.irrigation_rate +
+            "," + measurement.results.uniformity_distribution + '\n';
+      	}
+      	else{
+            measurementString += formatDate(measurement.created_at) +
+            "," + measurement.county +
+            "," + measurement.user.email +
+            "," + measurement.zipcode +
+            "," + measurement.time +
+            "," + measurement.results.irrigation_rate +
+            "," + measurement.results.uniformity_distribution + '\n';
+        }
       });
       res.send(measurementString);
       //res.json(measurements);
