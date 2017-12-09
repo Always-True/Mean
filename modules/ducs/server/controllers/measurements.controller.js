@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Measurement = require('../models/measurements.server.model.js'),
+    //Measurement = require('../models/measurements.server.model.js'),
+    Measurement = mongoose.model('Measurement'),
     path = require('path'),
     config = require(path.resolve('./config/config')),
     User = mongoose.model('User'),
@@ -27,10 +28,10 @@ exports.create = function(req, res) {
 
   measurement.save(function(err) {
     if(err) {
-      console.log(err);
+     // console.log(err);
       res.status(400).send(err);
     } else {
-      console.log("Successfully created:\n" + measurement);
+      //console.log("Successfully created:\n" + measurement);
       res.json(measurement);
     }
   });
@@ -166,12 +167,22 @@ exports.delete = function(req, res) {
       res.status(400).send(err);
     }
     else {
-      console.log("Successfully deleted:\n" + measurement);
-      //res.json(measurement)
+      //console.log("Successfully deleted:\n" + measurement);
       res.end();
     }
   })
+};
 
+// delete all measurements
+exports.deleteAll = function(req, res) {
+  Measurement.deleteMany({}, function(err){
+     if(err) {
+      res.status(400).send(err);
+    }
+    else {
+      res.end();
+    }   
+  });
 };
 
 /* view a measurement */
@@ -182,7 +193,6 @@ exports.view = function(req, res) {
 
   /* Retreive all the directory measurements, sorted alphabetically by listing code */
 exports.list = function(req, res) {
-
   Measurement.find().populate("user", "email").sort({'created_at': -1}).exec(function(err, measurements) {
     if(err) {
       res.status(400).send(err);
@@ -194,26 +204,43 @@ exports.list = function(req, res) {
 };
 
 exports.export = function(req, res) {
-  console.log("hello");
+  //console.log("hello");
   Measurement.find().populate("user", "email").sort({'created_at': -1}).exec(function(err, measurements) {
     if(err) {
       res.status(400).send(err);
 
     } else {
-      var measurementString = "County,Email,Zipcode,Time,Irrigation Rate,Uniformity Distribution \n";
+      var measurementString = "Date,County,Email,Zipcode,Time,Irrigation Rate,Uniformity Distribution \n";
       measurements.forEach(function(measurement) {
-        measurementString += measurement.county +
-        "," + measurement.user.email +
-        "," + measurement.zipcode +
-        "," + measurement.time +
-        "," + measurement.results.irrigation_rate +
-        "," + measurement.results.uniformity_distribution + '\n';
+
+      	if(measurement.user == null){
+            measurementString += formatDate(measurement.created_at) +
+            "," + measurement.county +
+            "," + "undefine" +
+            "," + measurement.zipcode +
+            "," + measurement.time +
+            "," + measurement.results.irrigation_rate +
+            "," + measurement.results.uniformity_distribution + '\n';
+      	}
+      	else{
+            measurementString += formatDate(measurement.created_at) +
+            "," + measurement.county +
+            "," + measurement.user.email +
+            "," + measurement.zipcode +
+            "," + measurement.time +
+            "," + measurement.results.irrigation_rate +
+            "," + measurement.results.uniformity_distribution + '\n';
+        }
       });
       res.send(measurementString);
       //res.json(measurements);
-      console.log("success");
+      //console.log("success");
       }
   });
+}
+function formatDate(date) {
+  var dbDate = new Date(date);
+  return dbDate.toLocaleDateString();
 }
 
 exports.getCountyCounts = function(req, res) {
@@ -222,6 +249,36 @@ exports.getCountyCounts = function(req, res) {
       res.status(400).send(err);
     } else {
       res.json(countyCount);
+    }
+  });
+};
+
+exports.getCountyCountsByYear = function(req, res) {
+  var start = new Date(req.params.year, 1, 1);
+  var end = new Date(req.params.year, 12, 31);
+
+  Measurement.aggregate([
+    {"$match": {created_at: {$gte: start, $lt: end}}},
+    {"$group": {_id:"$county", count:{$sum:1}}}
+  ]).sort({'count': -1}).exec(function(err, countyCount) {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.json(countyCount);
+    }
+  });
+};
+
+exports.getActiveYears = function(req, res) {
+  Measurement.aggregate([
+    { "$group":
+      {_id: { "$year": "$created_at"}}
+    }
+  ]).exec(function(err, years) {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.json(years);
     }
   });
 };
@@ -256,12 +313,12 @@ exports.email = function (req, res){
   /*metric = false -- imperial (inch)*/
   if(metric == true){
     /*Do not need to convert, because unit in database is cm*/
-    unit = "cm/hrs";
+    unit = "cm/hr";
   }
   else{
     /*convert cm to inch*/
     irrigation_rate = (irrigation_rate/2.54).toFixed(2);
-    unit = "inch/hrs";
+    unit = "in/hr";
   }
 
   if(measurement.notes){
@@ -296,7 +353,7 @@ exports.email = function (req, res){
           res.status(400).send({ message: 'Failure sending email'});
         }
 
-        done(err);
+       // done(err);
   });
 };
 
@@ -306,7 +363,7 @@ exports.measurementByID = function(req, res, next, id) {
     if(err) {
       res.status(400).send(err);
     } else {
-      console.log("Successfully read:\n" + measurement);
+      //console.log("Successfully read:\n" + measurement);
       req.measurement = measurement;
       next();
     }

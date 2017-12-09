@@ -21,6 +21,7 @@
         title: 'How-to',
         state: 'ducs.Instructions',
         //type: 'dropdown',
+        roles: '*'
     });
 
     // Add DUC Admin entries to the existing Admin dropbown
@@ -30,7 +31,7 @@
       roles: ['user', 'admin']
     });
     menuService.addSubMenuItem('topbar', 'admin', {
-      title: 'County Map',
+      title: 'Duc Stats',
       state: 'ducs.admin-map',
       roles: ['user', 'admin']
     });
